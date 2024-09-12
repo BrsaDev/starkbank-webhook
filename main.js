@@ -96,6 +96,56 @@ app.post('/receiver/WS001', async (req, res) => {
     }
     return res.status(200).json({resultado: "OK"})
 })
+app.post('/receiver/WS002', async (req, res) => {
+    let transacao = req.body.event.log.deposit
+    // console.log(transacao)
+    let checkedTransacao = await checkTransacao(transacao, "WS002")
+    if ( !checkedTransacao.length || !checkedTransacao ) {
+        let createdTransacao = await salvarTransacao(transacao, "WS002")
+        // console.log(createdTransacao)
+    }
+    return res.status(200).json({resultado: "OK"})
+})
+app.post('/receiver/WS003', async (req, res) => {
+    let transacao = req.body.event.log.deposit
+    // console.log(transacao)
+    let checkedTransacao = await checkTransacao(transacao, "WS003")
+    if ( !checkedTransacao.length || !checkedTransacao ) {
+        let createdTransacao = await salvarTransacao(transacao, "WS003")
+        // console.log(createdTransacao)
+    }
+    return res.status(200).json({resultado: "OK"})
+})
+app.post('/receiver/WS008', async (req, res) => {
+    let transacao = req.body.event.log.deposit
+    // console.log(transacao)
+    let checkedTransacao = await checkTransacao(transacao, "WS008")
+    if ( !checkedTransacao.length || !checkedTransacao ) {
+        let createdTransacao = await salvarTransacao(transacao, "WS008")
+        // console.log(createdTransacao)
+    }
+    return res.status(200).json({resultado: "OK"})
+})
+app.post('/receiver/WS009', async (req, res) => {
+    let transacao = req.body.event.log.deposit
+    // console.log(transacao)
+    let checkedTransacao = await checkTransacao(transacao, "WS009")
+    if ( !checkedTransacao.length || !checkedTransacao ) {
+        let createdTransacao = await salvarTransacao(transacao, "WS009")
+        // console.log(createdTransacao)
+    }
+    return res.status(200).json({resultado: "OK"})
+})
+app.post('/receiver/WS014', async (req, res) => {
+    let transacao = req.body.event.log.deposit
+    // console.log(transacao)
+    let checkedTransacao = await checkTransacao(transacao, "WS014")
+    if ( !checkedTransacao.length || !checkedTransacao ) {
+        let createdTransacao = await salvarTransacao(transacao, "WS014")
+        // console.log(createdTransacao)
+    }
+    return res.status(200).json({resultado: "OK"})
+})
 // app.get('/login', (req, res) => {
 //     return res.render('login')
 // })

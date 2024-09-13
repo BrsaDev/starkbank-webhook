@@ -7,7 +7,7 @@ const fs = require('fs')
 
 const { checkTransacao } = require("./helpers/verificaTransacao")
 const { salvarTransacao } = require("./helpers/saveTransacoes")
-const { getTransacoesClienteDia, getTodasTransacoesCliente } = require("./helpers/consultaTansacoes")
+const { getUltimasTransacoesCliente, getTodasTransacoesCliente } = require("./helpers/consultaTansacoes")
 
 const app = express()
 
@@ -73,18 +73,13 @@ app.use(express.json({ limit: '50mb' }));
 app.get('/transacoes', async (req, res) => {
     let {cliente, page} = req.query
     if ( !cliente ) return res.status(200).json({erro: { message: "O cliente não foi encontrado"}})
-    
-    if ( page ) {
-        let transacoes = await getTodasTransacoesCliente(cliente, page)
-        if ( transacoes.erro ) return res.status(200).json({erro: { message: transacoes.erro }})
-        if ( !transacoes ) return res.status(200).json({erro: { message: "Não foi encontrado transações" }})
-        return res.status(200).json({resultado: transacoes})
-    }else {
-        let transacoes = await getTransacoesClienteDia(cliente)
-        if ( transacoes.erro ) return res.status(200).json({erro: { message: transacoes.erro }})
-        if ( !transacoes ) return res.status(200).json({erro: { message: "Não foi encontrado transações hoje." }})
-        return res.status(200).json({resultado: transacoes})
-    }    
+
+    if ( page ) var transacoes = await getTodasTransacoesCliente(cliente, page)
+    else var transacoes = await getUltimasTransacoesCliente(cliente)   
+
+    if ( transacoes.erro ) return res.status(200).json({erro: { message: transacoes.erro }})
+    if ( !transacoes ) return res.status(200).json({erro: { message: "Não foi encontrado transações." }})
+    return res.status(200).json({resultado: transacoes})
 })
 app.post('/receiver/WS001', async (req, res) => {
     let transacao = req.body.event.log.deposit

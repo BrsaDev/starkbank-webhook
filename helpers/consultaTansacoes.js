@@ -3,15 +3,14 @@ const { Op, literal, fn, col, where } = require('sequelize')
 const Transacoes = require("../models/Transacoes")
 
 module.exports = {
-    getTransacoesClienteDia: async (cliente) => {
+    getUltimasTransacoesCliente: async (cliente) => {
         try {
-            let hoje = new Date().toLocaleString("pt-BR").split(',')[0]
-            // console.log(hoje)
             let transacao = await Transacoes.findAll({
                 where: {
-                    cliente,
-                    data_created: hoje
+                    cliente
                 },
+                limit: 30,
+                offset: 0,
                 order: [["data_created", "DESC"], ["hora_created", "DESC"]]
             })
             transacao = JSON.parse(JSON.stringify(transacao, null, 2))
